@@ -1,0 +1,97 @@
+/* NEblox Game v3.0 styling - neon, simple responsive */
+:root{
+  --bg:#0b0d14;
+  --panel:#0f1724;
+  --neon:#66b2ff;
+  --accent:#7cffc0;
+  --danger:#ff6b6b;
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Inter,system-ui,Segoe UI,Arial;
+  background: linear-gradient(180deg,var(--bg) 0%, #0f1220 100%);
+  color:#dfeefd;
+  display:flex;
+  justify-content:center;
+  padding:18px;
+  -webkit-font-smoothing:antialiased;
+}
+
+#ui{
+  width:min(720px,95vw);
+  text-align:center;
+}
+
+.title{
+  font-size:34px;
+  margin:4px 0;
+  color:var(--neon);
+  text-shadow:0 0 12px rgba(102,178,255,0.35), 0 0 30px rgba(122,122,255,0.08);
+}
+
+.subtitle{ margin-top:0; color:#9fb3d6; margin-bottom:14px }
+
+#game-wrap{
+  position:relative;
+  width:500px;
+  margin: 0 auto;
+  border:6px solid rgba(102,178,255,0.14);
+  border-radius:10px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.6), inset 0 0 40px rgba(102,178,255,0.03);
+  background:linear-gradient(180deg,#07090f 0%, #0b0d14 100%);
+}
+
+canvas{
+  display:block;
+  width:100%;
+  height:auto;
+  background:linear-gradient(180deg,#05060a,#0b0d14);
+  image-rendering:pixelated;
+  border-radius:6px;
+}
+
+#hud{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-top:12px;
+  gap:8px;
+}
+
+#hud .big{ padding:8px 14px; border-radius:8px; background:rgba(102,178,255,0.12); color:var(--neon); border:1px solid rgba(102,178,255,0.12); cursor:pointer }
+#hud .big:hover{ background:rgba(102,178,255,0.18) }
+
+#center-hud, #left-hud, #right-hud{ display:flex; gap:8px; align-items:center; }
+#levelLabel, #timerLabel, #scoreLabel, #lifeLabel{
+  background:rgba(255,255,255,0.03);
+  padding:8px 10px;
+  border-radius:6px;
+  font-weight:600;
+  color:#eaf7ff;
+  min-width:86px;
+}
+
+.footer{ color:#8ea6c4; margin-top:12px; font-size:13px }
+
+.hidden{ display:none }
+#overlay{
+  position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+  background: linear-gradient(180deg, rgba(2,6,23,0.6), rgba(1,4,12,0.8));
+  z-index:20;
+}
+#overlay-box{
+  background: linear-gradient(180deg, rgba(14,18,30,0.9), rgba(6,10,20,0.95));
+  border: 1px solid rgba(102,178,255,0.12);
+  padding:22px;
+  border-radius:12px;
+  width:85%;
+  max-width:420px;
+  text-align:center;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.6);
+}
+#overlay-buttons{ margin-top:14px; display:flex; gap:8px; justify-content:center }
+.btn{ padding:8px 12px; border-radius:8px; cursor:pointer; border:none; font-weight:700 }
+.btn-primary{ background:var(--neon); color:#051223 }
+.btn-ghost{ background:transparent; color:#cfeaff; border:1px solid rgba(255,255,255,0.06) }
