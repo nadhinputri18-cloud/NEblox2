@@ -501,22 +501,22 @@ showMenu();
 loadLevel(level);
 
 // ============ END of script ============
-#menuScreen {
-    text-align: center;
-    margin-top: 100px;
+const menuScreen = document.getElementById("menuScreen");
+const gameScreen = document.getElementById("gameScreen");
+const playBtn = document.getElementById("playBtn");
+
+// Saat PLAY ditekan → masuk game
+playBtn.addEventListener("click", () => {
+    menuScreen.style.display = "none";    // hilangkan menu
+    gameScreen.style.display = "block";   // tampilkan game
+
+    startGame(); // fungsi mulai game
+});
+function startGame() {
+    resetPlayer();
+    resetTimer();
+    level = 1;
+    currentMap = maps[level];
+    gameLoop();
 }
 
-.menu-btn {
-    padding: 12px 30px;
-    margin-top: 20px;
-    background: #6f9cff;
-    border: none;
-    border-radius: 10px;
-    font-size: 20px;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-.menu-btn:hover {
-    background: #8fb3ff;
-}
