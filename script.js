@@ -388,6 +388,16 @@ function roundRect(ctx, x, y, w, h, r, fill, stroke){
   if(fill) ctx.fill();
   if(stroke) ctx.stroke();
 }
+const menuScreen = document.getElementById("menuScreen");
+const gameScreen = document.getElementById("gameScreen");
+const playBtn = document.getElementById("playBtn");
+
+playBtn.addEventListener("click", () => {
+    menuScreen.style.display = "none";      // Sembunyikan menu
+    gameScreen.style.display = "block";     // Tampilkan game
+
+    startGame(); // MULAI GAME!
+});
 
 // ============ GAME LOOP ============
 let lastTime = 0;
