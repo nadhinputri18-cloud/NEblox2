@@ -398,6 +398,14 @@ playBtn.addEventListener("click", () => {
 
     startGame(); // MULAI GAME!
 });
+function startGame() {
+    level = 1;
+    currentMap = maps[level];
+    resetPlayer();
+    resetTimer();
+    gameLoop();
+}
+
 
 // ============ GAME LOOP ============
 let lastTime = 0;
