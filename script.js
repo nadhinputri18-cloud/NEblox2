@@ -501,22 +501,4 @@ showMenu();
 loadLevel(level);
 
 // ============ END of script ============
-const menuScreen = document.getElementById("menuScreen");
-const gameScreen = document.getElementById("gameScreen");
-const playBtn = document.getElementById("playBtn");
-
-// Saat PLAY ditekan → masuk game
-playBtn.addEventListener("click", () => {
-    menuScreen.style.display = "none";    // hilangkan menu
-    gameScreen.style.display = "block";   // tampilkan game
-
-    startGame(); // fungsi mulai game
-});
-function startGame() {
-    resetPlayer();
-    resetTimer();
-    level = 1;
-    currentMap = maps[level];
-    gameLoop();
-}
 
