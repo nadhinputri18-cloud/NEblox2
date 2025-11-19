@@ -95,3 +95,22 @@ canvas{
 .btn{ padding:8px 12px; border-radius:8px; cursor:pointer; border:none; font-weight:700 }
 .btn-primary{ background:var(--neon); color:#051223 }
 .btn-ghost{ background:transparent; color:#cfeaff; border:1px solid rgba(255,255,255,0.06) }
+#menuScreen {
+    text-align: center;
+    margin-top: 100px;
+}
+
+.menu-btn {
+    padding: 12px 30px;
+    margin-top: 20px;
+    background: #6f9cff;
+    border: none;
+    border-radius: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.menu-btn:hover {
+    background: #8fb3ff;
+}
