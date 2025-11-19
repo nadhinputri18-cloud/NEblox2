@@ -501,3 +501,22 @@ showMenu();
 loadLevel(level);
 
 // ============ END of script ============
+#menuScreen {
+    text-align: center;
+    margin-top: 100px;
+}
+
+.menu-btn {
+    padding: 12px 30px;
+    margin-top: 20px;
+    background: #6f9cff;
+    border: none;
+    border-radius: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.menu-btn:hover {
+    background: #8fb3ff;
+}
