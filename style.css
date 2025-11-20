@@ -10,6 +10,10 @@ body {
     height: 100vh;
     text-align: center;
     position: relative;
+    background-image: url('bg.jpeg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 .bg-home {
