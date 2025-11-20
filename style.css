@@ -1,50 +1,39 @@
 body {
     margin: 0;
-    padding: 0;
+    overflow: hidden;
+    background: black;
     font-family: Arial, sans-serif;
 }
 
-/* Home Screen */
-#homeScreen {
+#startScreen {
+    position: absolute;
     width: 100%;
-    height: 100vh;
-    text-align: center;
-    position: relative;
-    background-image: url('bg.jpeg');
+    height: 100%;
+    background: url("bg.jpeg");
     background-size: cover;
     background-position: center;
-    background-repeat: no-repeat;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
-.bg-home {
-    width: 100%;
-    height: 100vh;
-    object-fit: cover;
-    position: absolute;
-    z-index: -1;
-}
-
-.title {
-    margin-top: 80px;
-    font-size: 48px;
+#startScreen h1 {
     color: white;
-    text-shadow: 2px 2px 5px black;
+    font-size: 60px;
+    margin-bottom: 20px;
 }
 
-.start-btn {
-    margin-top: 40px;
+#startBtn {
     padding: 15px 40px;
-    font-size: 24px;
-    border-radius: 10px;
+    font-size: 25px;
     border: none;
-    background: #ff4081;
-    color: white;
+    border-radius: 10px;
     cursor: pointer;
-    border: 3px solid white;
 }
 
-#gameScreen {
-    display: none; /* disembunyikan */
-    text-align: center;
-    margin-top: 20px;
+#gameCanvas {
+    display: none;
+    background: url("bg1.jpeg");
+    background-size: cover;
 }
