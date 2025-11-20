@@ -1,20 +1,22 @@
 body {
     margin: 0;
     overflow: hidden;
-    background: black;
     font-family: Arial, sans-serif;
 }
 
-/* START SCREEN */
+/* === START SCREEN === */
 #startScreen {
-    position: absolute;
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
-    background: url("bg.jpeg") center/cover no-repeat;
+    background: url("bg.jpeg") no-repeat center center/cover;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    z-index: 10;
 }
 
 #startScreen h1 {
@@ -31,20 +33,8 @@ body {
     cursor: pointer;
 }
 
-/* CANVAS GAME */
+/* === GAME CANVAS === */
 #gameCanvas {
-    display: none; /* canvas awalnya disembunyikan */
-    width: 100vw;
-    height: 100vh;
-    background: url("bg1.jpeg") center/cover no-repeat;
-}
-
-/* Setelah tombol START ditekan → canvas muncul */
-body.started #gameCanvas {
-    display: block;
-}
-
-/* Setelah START → start screen hilang */
-body.started #startScreen {
     display: none;
+    background: url("bg1.jpeg") no-repeat center center/cover;
 }
