@@ -7,9 +7,8 @@ const ctx = canvas.getContext("2d");
 let gameStarted = false;
 
 startBtn.addEventListener("click", () => {
-    startScreen.style.display = "none";
-    gameStarted = true;
-    startGame();
+    document.body.classList.add("started"); // ⬅ bikin canvas muncul
+    startGame(); // mulai game
 });
 
 // --- GAME VARIABLES ---
