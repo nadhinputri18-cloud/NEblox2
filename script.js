@@ -7,8 +7,9 @@ const ctx = canvas.getContext("2d");
 let gameStarted = false;
 
 startBtn.addEventListener("click", () => {
-    document.body.classList.add("started"); // ⬅ bikin canvas muncul
-    startGame(); // mulai game
+    document.body.classList.add("started"); 
+    gameStarted = true; // ⬅ WAJIB
+    startGame();
 });
 
 // --- GAME VARIABLES ---
@@ -117,8 +118,13 @@ function updateGame() {
     // If player touches key → take key
     if (!keyObject.taken && isColliding(player, keyObject)) {
         keyObject.taken = true;
-        alert("Kunci diambil! (Nanti muncul kuis di sini)");
+        alert("Kunci diambil! Pertanyaan Level 1 muncul nanti.");
     }
 
-    // If player reaches door
-    if (keyObject.taken && isColliding
+    // If player reaches door → must have key
+    if (keyObject.taken && isColliding(player, doorObject)) {
+        alert("Level Selesai! Siap lanjut Level 2!");
+    }
+
+    requestAnimationFrame(updateGame);
+}
