@@ -1,87 +1,105 @@
-// =====================
-// NEblox v3.0 — GAME SCRIPT
-// =====================
-
-// Ambil elemen dari HTML
+const startScreen = document.getElementById("startScreen");
 const startBtn = document.getElementById("startBtn");
-const homeScreen = document.getElementById("homeScreen");
-const gameScreen = document.getElementById("gameScreen");
+const canvas = document.getElementById("gameCanvas");
+const ctx = canvas.getContext("2d");
 
-// Tombol start → masuk game
-startBtn.addEventListener("click", () => {
-    homeScreen.style.display = "none";
-    gameScreen.style.display = "block";
+// Load Images
+const playerImg = new Image();
+playerImg.src = "karakter.png";
 
-    startGame();
-});
+const enemyImg = new Image();
+enemyImg.src = "enemy.png";
 
-// =====================
-// GAME START
-// =====================
-function startGame() {
-    const canvas = document.getElementById("gameCanvas");
-    const ctx = canvas.getContext("2d");
+// Player object
+const player = {
+    x: 100,
+    y: 350,
+    width: 60,
+    height: 60,
+    dy: 0,
+    gravity: 1,
+    jumpForce: -17,
+    onGround: true
+};
 
-    const tileSize = 50; // ukuran kotak labirin
+// Enemy object
+const enemy = {
+    x: 600,
+    y: 350,
+    width: 60,
+    height: 60,
+    speed: 2
+};
 
-    // Maze 2D (1 tembok, 0 jalan)
-    const maze = [
-        [1,1,1,1,1,1,1,1,1,1],
-        [1,0,0,0,1,0,0,0,0,1],
-        [1,0,1,0,1,0,1,1,0,1],
-        [1,0,1,0,0,0,0,1,0,1],
-        [1,0,1,1,1,1,0,1,0,1],
-        [1,0,0,0,0,1,0,1,0,1],
-        [1,1,1,1,0,1,0,1,0,1],
-        [1,0,0,1,0,1,0,0,0,1],
-        [1,0,0,0,0,0,0,1,0,1],
-        [1,1,1,1,1,1,1,1,1,1],
-    ];
+// Keyboard input
+let keys = {};
 
-    // Player posisi awal
-    let playerX = 1;
-    let playerY = 1;
+document.addEventListener("keydown", e => keys[e.key] = true);
+document.addEventListener("keyup", e => keys[e.key] = false);
 
-    // =====================
-    // Render Maze
-    // =====================
-    function drawMaze() {
-        for (let y = 0; y < maze.length; y++) {
-            for (let x = 0; x < maze[y].length; x++) {
-                if (maze[y][x] === 1) {
-                    ctx.fillStyle = "#111"; // tembok
-                } else {
-                    ctx.fillStyle = "#eee"; // jalan
-                }
-                ctx.fillRect(x * tileSize, y * tileSize, tileSize, tileSize);
-            }
-        }
+// Start button event
+startBtn.onclick = () => {
+    startScreen.style.display = "none";
+    canvas.style.display = "block";
+    gameLoop();
+};
 
-        // Player
-        ctx.fillStyle = "red";
-        ctx.fillRect(playerX * tileSize, playerY * tileSize, tileSize, tileSize);
+// Game Loop
+function gameLoop() {
+    requestAnimationFrame(gameLoop);
+    update();
+    draw();
+}
+
+function update() {
+    // Move left
+    if (keys["ArrowLeft"]) player.x -= 5;
+
+    // Move right
+    if (keys["ArrowRight"]) player.x += 5;
+
+    // Jump
+    if (keys[" "] && player.onGround) {
+        player.dy = player.jumpForce;
+        player.onGround = false;
     }
 
-    // =====================
-    // Kontrol pemain
-    // =====================
-    document.addEventListener("keydown", (e) => {
-        let moveX = 0;
-        let moveY = 0;
+    // Apply gravity
+    player.y += player.dy;
+    player.dy += player.gravity;
 
-        if (e.key === "ArrowUp") moveY = -1;
-        if (e.key === "ArrowDown") moveY = 1;
-        if (e.key === "ArrowLeft") moveX = -1;
-        if (e.key === "ArrowRight") moveX = 1;
+    // Ground collision
+    if (player.y > 350) {
+        player.y = 350;
+        player.dy = 0;
+        player.onGround = true;
+    }
 
-        // Cek apakah jalan boleh dilewati
-        if (maze[playerY + moveY][playerX + moveX] === 0) {
-            playerX += moveX;
-            playerY += moveY;
-        }
+    // Enemy movement (patrol)
+    enemy.x -= enemy.speed;
+    if (enemy.x < -50) {
+        enemy.x = 950; // respawn
+    }
 
-        drawMaze();
-    });
+    // Collision check
+    if (
+        player.x < enemy.x + enemy.width &&
+        player.x + player.width > enemy.x &&
+        player.y < enemy.y + enemy.height &&
+        player.y + player.height > enemy.y
+    ) {
+        alert("GAME OVER!");
+        window.location.reload();
+    }
+}
 
-    drawMaze(); // render pertama kali
+// DRAWING
+function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Player
+    ctx.drawImage(playerImg, player.x, player.y, player.width, player.height);
+
+    // Enemy
+    ctx.drawImage(enemyImg, enemy.x, enemy.y, enemy.width, enemy.height);
 }
