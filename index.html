@@ -1,67 +1,24 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>NEblox Game</title>
-  <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEblox Game</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div id="ui">
-    <h1 class="title">NEblox Game</h1>
-    <p class="subtitle">Find the exit. Collect coins. Survive the traps.</p>
 
-    <!-- Canvas container -->
-    <div id="game-wrap">
-      <canvas id="gameCanvas" width="500" height="500"></canvas>
-      <!-- Overlays -->
-      <div id="overlay" class="hidden">
-        <div id="overlay-box">
-          <h2 id="overlay-title">Title</h2>
-          <p id="overlay-msg">Message</p>
-          <div id="overlay-buttons"></div>
-        </div>
-      </div>
+    <!-- HOME SCREEN -->
+    <div id="home-screen">
+        <h1 class="title">NEblox Game</h1>
+        <img src="tombol.png" id="startBtn" class="btn-start">
     </div>
 
-    <!-- Bottom HUD -->
-    <div id="hud">
-      <div id="left-hud">
-        <button id="btnStart" class="big">Start</button>
-        <button id="btnHow" class="big">How to Play</button>
-      </div>
-
-      <div id="center-hud">
-        <div id="levelLabel">Level: 1</div>
-        <div id="timerLabel">Time: 0</div>
-      </div>
-
-      <div id="right-hud">
-        <div id="scoreLabel">Score: 0</div>
-        <div id="lifeLabel">❤ x3</div>
-      </div>
+    <!-- GAME SCREEN -->
+    <div id="game-screen">
+        <canvas id="gameCanvas" width="800" height="500"></canvas>
     </div>
 
-    <p class="footer">Controls: Arrow keys / WASD — Restart with R</p>
-  </div>
-  <div id="menuScreen">
-   <!-- HOME SCREEN -->
-</div>
-
-<div id="gameScreen" style="display:none;">
-    <canvas id="gameCanvas" width="400" height="400"></canvas>
-
-    <div class="hud">
-        <p id="levelText">Level: 1</p>
-        <p id="timerText">Time: 30</p>
-        <p id="healthText">Health: 3</p>
-        <button id="restartBtn">Restart</button>
-    </div>
-</div>
-  <script src="script.js"></script>
+    <script src="game.js"></script>
 </body>
 </html>
-
-
-
-
