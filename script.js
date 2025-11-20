@@ -1,105 +1,125 @@
+// --- START SCREEN ---
 const startScreen = document.getElementById("startScreen");
 const startBtn = document.getElementById("startBtn");
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
-// Load Images
-const playerImg = new Image();
-playerImg.src = "karakter.png";
+let gameStarted = false;
 
-const enemyImg = new Image();
-enemyImg.src = "enemy.png";
+startBtn.addEventListener("click", () => {
+    startScreen.style.display = "none";
+    gameStarted = true;
+    startGame();
+});
 
-// Player object
+// --- GAME VARIABLES ---
 const player = {
     x: 100,
     y: 350,
-    width: 60,
-    height: 60,
+    width: 40,
+    height: 50,
     dy: 0,
+    speed: 5,
+    jumping: false,
     gravity: 1,
-    jumpForce: -17,
-    onGround: true
 };
 
-// Enemy object
-const enemy = {
-    x: 600,
-    y: 350,
-    width: 60,
-    height: 60,
-    speed: 2
-};
+let background = new Image();
+background.src = "bg1.jpeg";
 
-// Keyboard input
+let keyImg = new Image();
+keyImg.src = "key.png";
+
+let doorImg = new Image();
+doorImg.src = "door.png";
+
+const keyObject = { x: 600, y: 360, width: 40, height: 40, taken: false };
+const doorObject = { x: 800, y: 330, width: 60, height: 80 };
+
 let keys = {};
 
-document.addEventListener("keydown", e => keys[e.key] = true);
-document.addEventListener("keyup", e => keys[e.key] = false);
+document.addEventListener("keydown", (e) => { keys[e.key] = true; });
+document.addEventListener("keyup", (e) => { keys[e.key] = false; });
 
-// Start button event
-startBtn.onclick = () => {
-    startScreen.style.display = "none";
-    canvas.style.display = "block";
-    gameLoop();
-};
-
-// Game Loop
-function gameLoop() {
-    requestAnimationFrame(gameLoop);
-    update();
-    draw();
+// --- START GAME ---
+function startGame() {
+    requestAnimationFrame(updateGame);
 }
 
-function update() {
-    // Move left
-    if (keys["ArrowLeft"]) player.x -= 5;
+// --- DRAW PLAYER ---
+function drawPlayer() {
+    let img = new Image();
+    img.src = "karakter.png";
+    ctx.drawImage(img, player.x, player.y, player.width, player.height);
+}
 
-    // Move right
-    if (keys["ArrowRight"]) player.x += 5;
+// --- DRAW BACKGROUND ---
+function drawBackground() {
+    ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
+}
+
+// --- DRAW KEY ---
+function drawKey() {
+    if (!keyObject.taken) {
+        ctx.drawImage(keyImg, keyObject.x, keyObject.y, keyObject.width, keyObject.height);
+    }
+}
+
+// --- DRAW DOOR ---
+function drawDoor() {
+    ctx.drawImage(doorImg, doorObject.x, doorObject.y, doorObject.width, doorObject.height);
+}
+
+// --- PLAYER MOVEMENT ---
+function movePlayer() {
+    if (keys["ArrowRight"]) player.x += player.speed;
+    if (keys["ArrowLeft"]) player.x -= player.speed;
 
     // Jump
-    if (keys[" "] && player.onGround) {
-        player.dy = player.jumpForce;
-        player.onGround = false;
+    if (keys[" "] && !player.jumping) {
+        player.dy = -15;
+        player.jumping = true;
     }
 
-    // Apply gravity
-    player.y += player.dy;
+    // Gravity
     player.dy += player.gravity;
+    player.y += player.dy;
 
-    // Ground collision
-    if (player.y > 350) {
-        player.y = 350;
+    // Floor Collision
+    if (player.y + player.height >= 400) {
+        player.y = 400 - player.height;
+        player.jumping = false;
         player.dy = 0;
-        player.onGround = true;
-    }
-
-    // Enemy movement (patrol)
-    enemy.x -= enemy.speed;
-    if (enemy.x < -50) {
-        enemy.x = 950; // respawn
-    }
-
-    // Collision check
-    if (
-        player.x < enemy.x + enemy.width &&
-        player.x + player.width > enemy.x &&
-        player.y < enemy.y + enemy.height &&
-        player.y + player.height > enemy.y
-    ) {
-        alert("GAME OVER!");
-        window.location.reload();
     }
 }
 
-// DRAWING
-function draw() {
+// --- COLLISION DETECTION ---
+function isColliding(a, b) {
+    return (
+        a.x < b.x + b.width &&
+        a.x + a.width > b.x &&
+        a.y < b.y + b.height &&
+        a.y + a.height > b.y
+    );
+}
+
+// --- MAIN UPDATE LOOP ---
+function updateGame() {
+    if (!gameStarted) return;
+
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    // Player
-    ctx.drawImage(playerImg, player.x, player.y, player.width, player.height);
+    drawBackground();
+    movePlayer();
+    drawPlayer();
+    drawKey();
+    drawDoor();
 
-    // Enemy
-    ctx.drawImage(enemyImg, enemy.x, enemy.y, enemy.width, enemy.height);
-}
+    // If player touches key → take key
+    if (!keyObject.taken && isColliding(player, keyObject)) {
+        keyObject.taken = true;
+        alert("Kunci diambil! (Nanti muncul kuis di sini)");
+    }
+
+    // If player reaches door
+    if (keyObject.taken && isColliding
